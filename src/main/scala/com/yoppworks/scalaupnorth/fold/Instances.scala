@@ -12,4 +12,13 @@ object Instances {
         case Cons(x, xs) => Cons(x, f(xs))
       }
   }
+
+  implicit def seqFunctor[A] = new Functor[Seq] {
+    override def fmap[A, B](f: (A) => B)(fa: Seq[A]): Seq[B] =
+      fa match {
+        case x +: xs => f(x) +: fmap(f)(xs)
+        case _ => Seq()
+      }
+  }
+
 }

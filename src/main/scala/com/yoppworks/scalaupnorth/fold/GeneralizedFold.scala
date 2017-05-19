@@ -16,7 +16,6 @@ object GeneralizedFold {
   def sumListF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
   def countListF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
 
-
 }
 
 
