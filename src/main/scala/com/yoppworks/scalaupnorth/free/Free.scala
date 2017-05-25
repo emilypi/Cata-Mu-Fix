@@ -1,8 +1,9 @@
 package com.yoppworks.scalaupnorth.free
 
-import com.yoppworks.scalaupnorth.fold.{Functor, Mu}
+import com.yoppworks.scalaupnorth.fold.Functor
 
 import scala.annotation.tailrec
+import scala.collection.mutable.ListBuffer
 import scala.io.Source
 
 /**
