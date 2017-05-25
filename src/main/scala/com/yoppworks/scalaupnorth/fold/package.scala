@@ -9,8 +9,6 @@ package object fold {
 
   type Algebra[F[_], A] = F[A] => A
 
-  type L[H] = Fix[ListF[H, ?]]
-
   type Id[+A] = A
 
   implicit def listf[H] = new Functor[ListF[H, ?]] {
@@ -23,14 +21,15 @@ package object fold {
 
   def nil[H] = Fix[ListF[H, ?]](NilF)
 
-  def cons[H] = (h: H, t: L[H]) => Fix[ListF[H, ?]](Cons(h, t))
+  def cons[H] = (h: H, t: Fix[ListF[H, ?]]) => Fix[ListF[H, ?]](Cons(h, t))
 
-  def cata[B, F[_] : Functor](phi: F[B] => B)(fix: Fix[F]): B =
-    phi(implicitly[Functor[F]].fmap(cata[B, F](phi))(fix.unFix))
+  def cata[B, F[_] : Functor](φ: Algebra[F, B])(fix: Fix[F]): B =
+    φ(implicitly[Functor[F]].fmap(cata[B, F](φ))(fix.unFix))
 
   def sumF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _
   def countF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
-  def appendF[H](bs: L[H]) = cata[L[H], ListF[H, ?]] { case Cons(h, t) => cons(h, t); case NilF => bs } _
+  def appendF[H](bs: Fix[ListF[H, ?]]) = cata[Fix[ListF[H, ?]], ListF[H, ?]]
+    { case Cons(h, t) => cons(h, t); case NilF => bs } _
 
 
 }
