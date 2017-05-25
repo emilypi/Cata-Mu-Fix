@@ -6,7 +6,7 @@ final case class Cons[H, +T](head: H, tail: T) extends ListF[H, T]
 final case object NilF extends ListF[Nothing, Nothing]
 
 object ListF {
-  import com.yoppworks.cata.instances._
+  import instances._
 
   implicit class lfOps[H](lf: Fix[ListF[H, ?]]) {
 

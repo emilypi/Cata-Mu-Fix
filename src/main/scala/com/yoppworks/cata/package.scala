@@ -4,8 +4,6 @@ package com.yoppworks
 package object cata {
   import instances._
 
-  type ~>[F[_], G[_]] = NaturalTransformation[F, G]
-
   type Algebra[F[_], A] = F[A] => A
 
   type Id[+A] = A
