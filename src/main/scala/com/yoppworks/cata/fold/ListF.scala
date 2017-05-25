@@ -1,5 +1,4 @@
-package com.yoppworks.scalaupnorth.fold
-
+package com.yoppworks.cata.fold
 
 /**
   * Created by emilypi on 5/18/17.

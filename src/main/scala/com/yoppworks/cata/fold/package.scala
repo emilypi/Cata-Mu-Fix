@@ -1,4 +1,4 @@
-package com.yoppworks.scalaupnorth
+package com.yoppworks.cata
 
 /**
   * Created by emilypi on 5/25/17.

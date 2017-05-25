@@ -1,5 +1,4 @@
-package com.yoppworks.scalaupnorth.fold
-
+package com.yoppworks.cata.fold
 
 final case class Fix[F[_]](unFix: F[Fix[F]])
 
