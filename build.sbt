@@ -13,4 +13,4 @@ resolvers ++= Seq(
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 
-initialCommands in console := "import com.yoppworks.scalaupnorth._"
+initialCommands in console := "import com.yoppworks.cata._"
