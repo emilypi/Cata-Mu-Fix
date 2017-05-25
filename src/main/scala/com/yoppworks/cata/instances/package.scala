@@ -1,7 +1,6 @@
 package com.yoppworks.cata
 
-import com.yoppworks.cata.fold.{Cons, Functor, ListF, NilF}
-
+import com.yoppworks.cata._
 /**
   * Created by emilypi on 5/25/17.
   */

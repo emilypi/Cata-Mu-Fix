@@ -1,13 +1,8 @@
-package com.yoppworks.cata
+package com.yoppworks
 
-import com.yoppworks.cata._
 
-/**
-  * Created by emilypi on 5/25/17.
-  */
-package object fold {
+package object cata {
   import instances._
-  import ListF._
 
   type ~>[F[_], G[_]] = NaturalTransformation[F, G]
 
@@ -23,4 +18,3 @@ package object fold {
   def countF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
 
 }
-
