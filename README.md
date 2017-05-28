@@ -1,1 +1,1 @@
-## Generalized Recursion using Fixed point types Pt. I
+## Generalized Recursion using Fixed point types

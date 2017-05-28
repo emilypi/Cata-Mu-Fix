@@ -1,4 +1,4 @@
-name := "Cats com.yoppworks.Algebra"
+name := "Cata Mu Fix pt. II"
 
 version := "1.0"
 
