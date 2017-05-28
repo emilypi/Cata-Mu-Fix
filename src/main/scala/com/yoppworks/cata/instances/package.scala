@@ -6,6 +6,22 @@ import com.yoppworks.cata._
   */
 package object instances {
 
+  implicit def natF[A] = new Functor[NatF] {
+    override def fmap[A, B](f: (A) => B)(fa: NatF[A]): NatF[B] =
+      fa match {
+        case S(a) => S(f(a))
+        case Z => Z
+      }
+  }
+
+  implicit def treeF[N] = new Functor[TreeF[N, ?]] {
+    override def fmap[A, B](f: (A) => B)(fa: TreeF[N, A]): TreeF[N, B] =
+      fa match {
+        case BranchF(a, l, r) => BranchF(a, f(l), f(r))
+        case TipF => TipF
+      }
+  }
+
   implicit def listf[H] = new Functor[ListF[H, ?]] {
     def fmap[A, B](f: A => B)(fa: ListF[H, A]): ListF[H, B] =
       fa match {

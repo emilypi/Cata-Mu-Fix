@@ -1,7 +1,7 @@
 package com.yoppworks.cata
 
 
-sealed trait ListF[+H, +T]
+sealed abstract class ListF[+H, +T]
 final case class Cons[H, +T](head: H, tail: T) extends ListF[H, T]
 final case object NilF extends ListF[Nothing, Nothing]
 
