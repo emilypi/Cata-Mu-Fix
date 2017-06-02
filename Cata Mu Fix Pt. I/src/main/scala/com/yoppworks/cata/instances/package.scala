@@ -22,6 +22,15 @@ package object instances {
       }
   }
 
+  implicit def tree = new Functor[Tree] {
+    override def fmap[A, B](f: (A) => B)(fa: Tree[A]): Tree[B] =
+      fa match {
+        case Branch(a, l, r) => Branch(f(a), fmap(f)(l), fmap(f)(r))
+        case Tip => Tip
+      }
+
+  }
+
   implicit def listf[H] = new Functor[ListF[H, ?]] {
     def fmap[A, B](f: A => B)(fa: ListF[H, A]): ListF[H, B] =
       fa match {
@@ -43,5 +52,9 @@ package object instances {
       fa match { case Some(v) => Some(f(v)); case None => None }
   }
 
+  implicit def function[R] = new Functor[R => ?] {
+    override def fmap[A, B](f: (A) => B)(fa: (R) => A): (R) => B =
+      (r: R) => f(fa(r))
+  }
 
 }
