@@ -14,7 +14,7 @@ package object cata {
   type Nat = Mu[Option]
 
   implicit class fOps[A, B, E](f: A => B) {
-   def ∘(g: E => A): E => B = (a: E) => f(g(a))
+    def ∘(g: E => A): E => B = (a: E) => f(g(a))
   }
 
   def cata[B, F[_] : Functor](φ: Algebra[F, B])(fix: Fix[F]): B =
