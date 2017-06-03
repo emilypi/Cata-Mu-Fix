@@ -14,6 +14,7 @@ object NatF {
 
     def toInt: Int =
       cata[Int, NatF[?]] { case S(n) => 1 + n; case Z => 0 }(n)
+
   }
 
   def apply(n: Int): Fix[NatF[?]] =

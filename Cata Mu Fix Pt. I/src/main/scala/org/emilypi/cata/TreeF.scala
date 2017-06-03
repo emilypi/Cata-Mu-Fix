@@ -16,9 +16,6 @@ object TreeF {
 
     def depth: Int = cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }(t)
 
-    def inOrder: Unit =
-      cata[Unit, TreeF[A, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") }(t)
-
   }
 
   def tip[A] = Fix[TreeF[A, ?]](TipF)
