@@ -23,17 +23,16 @@ package object cata {
   }
 
   def cata[B, F[_] : Functor](φ: Algebra[F, B])(fix: Fix[F]): B =
-    φ ∘ implicitly[Functor[F]].fmap(cata[B, F](φ)) _ ∘ fix.unFix
-
+    φ ∘ implicitly[Functor[F]].fmap(cata(φ)) _ ∘ fix.unFix
 
   def ana[F[_] : Functor, B](ψ: CoAlgebra[B, F])(b: B): Fix[F] =
-    Fix(implicitly[Functor[F]].fmap(ana[F, B](ψ)) _ ∘ ψ(b))
-
+    Fix(implicitly[Functor[F]].fmap(ana(ψ)) _ ∘ ψ(b))
 
   def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: CoAlgebra[A, F])(a: A): B =
-    cata[B, F](φ) _ ∘ ana[F, A](ψ)(a)
+    cata(φ) _ ∘ ana(ψ) _ ∘ a
 
-
+  def meta[A, B, F[_] : Functor](ψ: CoAlgebra[A, F])(φ: Algebra[F, A])(fix: Fix[F]): Fix[F] =
+    ana(ψ) _ ∘ cata(φ) _ ∘ fix
 
   def sumF: Fix[ListF[Int, ?]] => Int =
     cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _
