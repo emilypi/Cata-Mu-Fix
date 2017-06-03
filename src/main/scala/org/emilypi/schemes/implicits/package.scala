@@ -1,4 +1,4 @@
-package org.emilypi.cata
+package org.emilypi.schemes
 
 /**
   * Created by emilypi on 6/2/17.

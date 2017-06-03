@@ -1,6 +1,6 @@
 package org.emilypi
 
-package object cata {
+package object schemes {
   import implicits._
 
   type Algebra[F[_], A] = F[A] => A

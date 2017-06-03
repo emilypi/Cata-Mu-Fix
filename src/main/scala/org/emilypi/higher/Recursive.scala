@@ -1,6 +1,6 @@
-package org.emilypi.schemes
+package org.emilypi.higher
 
-import org.emilypi.cata.Functor
+import org.emilypi.schemes.Functor
 
 /**
   * Created by emilypi on 6/3/17.

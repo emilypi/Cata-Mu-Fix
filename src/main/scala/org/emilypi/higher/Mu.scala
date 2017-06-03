@@ -1,6 +1,6 @@
-package org.emilypi.schemes
+package org.emilypi.higher
 
-import org.emilypi.cata._
+import org.emilypi.schemes._
 
 
 final case class Mu[F[_]](unMu: Algebra[F, ?] ~> Id)
