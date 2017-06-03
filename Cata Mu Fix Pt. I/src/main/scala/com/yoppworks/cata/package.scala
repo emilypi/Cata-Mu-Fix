@@ -3,7 +3,8 @@ package com.yoppworks
 
 
 package object cata {
-  import instances._
+
+  import instances._, ListF._
 
   type Algebra[F[_], A] = F[A] => A
 
@@ -11,31 +12,50 @@ package object cata {
 
   type Id[+A] = A
 
-  type Nat = Mu[Option]
+  def id[A]: A => A = a => a
 
   implicit class fOps[A, B, E](f: A => B) {
-   def ∘(g: E => A): E => B = (a: E) => f(g(a))
+    //compose functions
+    def ∘(g: E => A): E => B = (a: E) => f(g(a))
+
+    //alias for apply
+    def ∘(a: A): B = f(a)
   }
 
   def cata[B, F[_] : Functor](φ: Algebra[F, B])(fix: Fix[F]): B =
-    φ(implicitly[Functor[F]].fmap(cata[B, F](φ))(fix.unFix))
+    φ ∘ implicitly[Functor[F]].fmap(cata[B, F](φ)) _ ∘ fix.unFix
 
 
-  def ana[F[_]: Functor, B](ψ: CoAlgebra[B, F])(b: B): Fix[F] =
-    Fix(implicitly[Functor[F]].fmap(ana[F, B](ψ))(ψ(b)))
+  def ana[F[_] : Functor, B](ψ: CoAlgebra[B, F])(b: B): Fix[F] =
+    Fix(implicitly[Functor[F]].fmap(ana[F, B](ψ)) _ ∘ ψ(b))
 
 
-  def hylo[F[_]: Functor, A, B](φ: Algebra[F, B])(ψ: CoAlgebra[A, F]): A => B =
-    cata[B, F](φ) _  ∘  ana[F, A](ψ) _
-
-  def _hylo[F[_]: Functor, A, B](φ: Algebra[F, B])(ψ: CoAlgebra[A, F]): A => B =
-    (a: A) => φ(implicitly[Functor[F]].fmap(_hylo[F, A, B](φ)(ψ))(ψ(a)))
+  def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: CoAlgebra[A, F])(a: A): B =
+    cata[B, F](φ) _ ∘ ana[F, A](ψ)(a)
 
 
 
-  /** Examples of ListF operations */
-  def sumF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _
+  def sumF: Fix[ListF[Int, ?]] => Int =
+    cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _
 
-  def countF = cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
+  def countF: Fix[ListF[Int, ?]] => Int =
+    cata[Int, ListF[Int, ?]]{ case Cons(h, t) => 1 + t; case NilF => 0 } _
+
+  def genList[H]: Int => Fix[ListF[Int, ?]] =
+    ana[ListF[Int, ?], Int] { case 0 => NilF; case n => Cons(n, n - 1) } _
+
+  def collapseList: Fix[ListF[Int, ?]] => Int =
+    cata[Int, ListF[Int, ?]] { case NilF => 1; case Cons(h, t) => h * t } _
+
+  def factorial: Int => Int =
+    hylo[ListF[Int, ?], Int, Int]
+      { case NilF => 1; case Cons(h, t) => h * t }
+      { case 0 => NilF; case n => Cons(n, n - 1) }
+
+
+  def _factorial: Int => Int = collapseList ∘ genList
+
+
+
 
 }
