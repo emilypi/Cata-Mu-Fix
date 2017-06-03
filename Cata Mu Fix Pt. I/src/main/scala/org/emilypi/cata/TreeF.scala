@@ -18,6 +18,7 @@ object TreeF {
 
   }
 
+
   def tip[A] = Fix[TreeF[A, ?]](TipF)
 
   def branch[A, T](a: A, l: Fix[TreeF[A, ?]], r: Fix[TreeF[A, ?]]) =

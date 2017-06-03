@@ -31,7 +31,7 @@ package object examples {
 
   /** TreeF examples - more included in TreeF object */
   def inOrder[N]: Unit =
-    cata[Unit, TreeF[N, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") }
+    cata[Unit, TreeF[N, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") } _
 
   def genFibTree[N]: Int => Fix[TreeF[Int, ?]] =
     ana[TreeF[Int, ?], Int] { case 0 => TipF; case 1 => BranchF(1, 0, 0); case n if n > 1 => BranchF(n,  n - 1, n - 2)}

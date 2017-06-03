@@ -14,4 +14,8 @@ resolvers ++= Seq(
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 
 initialCommands in console :=
-  "import org.emilypi.cata._, org.emilypi.cata.instances._, org.emilypi.cata.ListF._, org.emilypi.cata.examples._"
+  "import " +
+    "org.emilypi.cata._, " +
+    "org.emilypi.cata.instances._, " +
+    "org.emilypi.cata.examples._, " +
+    "org.emilypi.schemes._"

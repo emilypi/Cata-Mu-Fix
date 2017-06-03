@@ -11,8 +11,8 @@ object ListF {
 
     def @:(h: H): Fix[ListF[H, ?]] = cons(h, lf)
 
-    def appendF(bs: Fix[ListF[H, ?]]) = cata[Fix[ListF[H, ?]], ListF[H, ?]]
-      { case Cons(h, t) => cons(h, t); case NilF => bs }(lf)
+    def appendF(bs: Fix[ListF[H, ?]]) =
+      cata[Fix[ListF[H, ?]], ListF[H, ?]] { case Cons(h, t) => cons(h, t); case NilF => bs }(lf)
 
     def toList: List[H] = cata[List[H], ListF[H, ?]] { case Cons(h, t) => h :: t; case NilF => Nil }(lf)
 

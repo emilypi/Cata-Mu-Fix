@@ -4,7 +4,7 @@ package org.emilypi.cata
   */
 package object instances {
 
-  implicit def natF[A] = new Functor[NatF] {
+  implicit def natF = new Functor[NatF] {
     override def fmap[A, B](f: (A) => B)(fa: NatF[A]): NatF[B] =
       fa match {
         case S(a) => S(f(a))
@@ -37,7 +37,7 @@ package object instances {
       }
   }
 
-  implicit def list[H] = new Functor[List] {
+  implicit def list = new Functor[List] {
     def fmap[A, B](f: (A) => B)(fa: List[A]): List[B] =
       fa match {
         case x +: xs => f(x) +: fmap(f)(xs)
