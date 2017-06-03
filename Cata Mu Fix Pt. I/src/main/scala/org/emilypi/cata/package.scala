@@ -1,6 +1,4 @@
-package com.yoppworks
-
-
+package org.emilypi
 
 package object cata {
   import implicits._

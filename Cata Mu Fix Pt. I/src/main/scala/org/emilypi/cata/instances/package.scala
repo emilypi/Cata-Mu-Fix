@@ -1,6 +1,4 @@
-package com.yoppworks.cata
-
-import com.yoppworks.cata._
+package org.emilypi.cata
 /**
   * Created by emilypi on 5/25/17.
   */

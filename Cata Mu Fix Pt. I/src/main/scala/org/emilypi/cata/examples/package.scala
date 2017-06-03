@@ -1,10 +1,11 @@
-package com.yoppworks.cata
+package org.emilypi.cata
 
 /**
   * Created by emilypi on 6/2/17.
   */
 package object examples {
-  import instances._, implicits._
+  import implicits._
+  import instances._
 
   def sumF: Fix[ListF[Int, ?]] => Int =
     cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _

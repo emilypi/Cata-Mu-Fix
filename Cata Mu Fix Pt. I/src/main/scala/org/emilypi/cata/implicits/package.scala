@@ -1,4 +1,4 @@
-package com.yoppworks.cata
+package org.emilypi.cata
 
 /**
   * Created by emilypi on 6/2/17.

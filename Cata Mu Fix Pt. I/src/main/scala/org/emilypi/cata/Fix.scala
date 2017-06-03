@@ -1,4 +1,4 @@
-package com.yoppworks.cata
+package org.emilypi.cata
 
 final case class Fix[F[_]](unFix: F[Fix[F]])
 

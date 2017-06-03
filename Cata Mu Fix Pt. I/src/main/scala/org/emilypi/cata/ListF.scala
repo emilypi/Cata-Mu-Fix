@@ -1,5 +1,4 @@
-package com.yoppworks.cata
-
+package org.emilypi.cata
 
 sealed abstract class ListF[+H, +T]
 final case class Cons[H, +T](head: H, tail: T) extends ListF[H, T]
