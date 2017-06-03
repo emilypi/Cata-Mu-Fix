@@ -4,7 +4,7 @@ package com.yoppworks
 
 package object cata {
 
-  import instances._, ListF._
+  import instances._, implicits._, Fix._
 
   type Algebra[F[_], A] = F[A] => A
 
@@ -12,27 +12,17 @@ package object cata {
 
   type Id[+A] = A
 
-  def id[A]: A => A = a => a
-
-  implicit class fOps[A, B, E](f: A => B) {
-    //compose functions
-    def ∘(g: E => A): E => B = (a: E) => f(g(a))
-
-    //alias for apply
-    def ∘(a: A): B = f(a)
-  }
-
   def cata[B, F[_] : Functor](φ: Algebra[F, B])(fix: Fix[F]): B =
-    φ ∘ implicitly[Functor[F]].fmap(cata(φ)) _ ∘ fix.unFix
+    φ ∘ implicitly[Functor[F]].fmap(cata(φ)) ∘ fix.unFix
 
   def ana[F[_] : Functor, B](ψ: CoAlgebra[B, F])(b: B): Fix[F] =
-    Fix(implicitly[Functor[F]].fmap(ana(ψ)) _ ∘ ψ(b))
+    Fix ∘ (implicitly[Functor[F]].fmap(ana(ψ)) ∘ ψ(b))
 
   def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: CoAlgebra[A, F])(a: A): B =
-    cata(φ) _ ∘ ana(ψ) _ ∘ a
+    cata(φ) ∘ ana(ψ) ∘ a
 
   def meta[A, B, F[_] : Functor](ψ: CoAlgebra[A, F])(φ: Algebra[F, A])(fix: Fix[F]): Fix[F] =
-    ana(ψ) _ ∘ cata(φ) _ ∘ fix
+    ana(ψ) ∘ cata(φ) ∘ fix
 
   def sumF: Fix[ListF[Int, ?]] => Int =
     cata[Int, ListF[Int, ?]]{ case Cons(h, t) => h + t; case NilF => 0 } _
