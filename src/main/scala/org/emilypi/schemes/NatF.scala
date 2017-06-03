@@ -12,9 +12,7 @@ object NatF {
 
   implicit class natOps(n: Fix[NatF[?]]) {
 
-    def toInt: Int =
-      cata[Int, NatF[?]] { case S(n) => 1 + n; case Z => 0 }(n)
-
+    def toInt: Int = NatF.toInt(n)
   }
 
   def apply(n: Int): Fix[NatF[?]] =
@@ -23,6 +21,8 @@ object NatF {
     case _ => succ(apply(n - 1))
   }
 
+  def toInt: Fix[NatF[?]] => Int =
+    cata[Int, NatF[?]] { case S(n) => 1 + n; case Z => 0 }
 
   def zero = Fix[NatF[?]](Z)
 

@@ -30,8 +30,8 @@ package object examples {
   def _factorial: Int => Int = collapseList ∘ genList
 
   /** TreeF examples - more included in TreeF object */
-  def inOrder[N]: Unit =
-    cata[Unit, TreeF[N, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") } _
+  def inOrder[N]: Fix[TreeF[N, ?]] => Unit =
+    cata[Unit, TreeF[N, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") }
 
   def genFibTree[N]: Int => Fix[TreeF[Int, ?]] =
     ana[TreeF[Int, ?], Int] { case 0 => TipF; case 1 => BranchF(1, 0, 0); case n if n > 1 => BranchF(n,  n - 1, n - 2)}
@@ -42,8 +42,8 @@ package object examples {
   //explicitly hylomorphic fac
   def fibonacci: Int => Int =
     hylo[TreeF[Int, ?], Int, Int]
-      { case TipF => 0; case BranchF(_, 0, 0) => 1; case BranchF(_, l, r) => l + r}
-      { case 0 => TipF; case 1 => BranchF(1, 0, 0); case n => BranchF(n, n - 1, n - 2)}
+      { case TipF => 0; case BranchF(_, 0, 0) => 1; case BranchF(_, l, r) => l + r }
+      { case 0 => TipF; case 1 => BranchF(1, 0, 0); case n => BranchF(n, n - 1, n - 2) }
 
   //implicitly hylomorphic fac
   def _fibonacci: Int => Int = cataFibTree ∘ genFibTree

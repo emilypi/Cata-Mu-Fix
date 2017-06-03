@@ -12,12 +12,17 @@ object TreeF {
 
   implicit class treeOps[A](t: Fix[TreeF[A, ?]]) {
 
-    def count: Int = cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + l + r; case TipF => 0 }(t)
+    def count = TreeF.count(t)
 
-    def depth: Int = cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }(t)
+    def depth = TreeF.depth(t)
 
   }
 
+  def count[A]: Fix[TreeF[A, ?]] => Int =
+    cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + l + r; case TipF => 0 }
+
+  def depth[A]: Fix[TreeF[A, ?]] => Int =
+    cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }
 
   def tip[A] = Fix[TreeF[A, ?]](TipF)
 

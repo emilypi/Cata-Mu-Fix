@@ -7,19 +7,18 @@ package object schemes {
 
   type Coalgebra[B, F[_]] = B => F[B]
 
-  type Id[+A] = A
 
-  def cata[B, F[_]](φ: Algebra[F, B])(fix: Fix[F])(implicit F: Functor[F]): B =
-    φ ∘ F.fmap(cata(φ)) _ ∘ fix.unFix
+  def cata[B, F[_]](φ: Algebra[F, B])(implicit F: Functor[F]): Fix[F] => B =
+    φ ∘ F.fmap(cata(φ)) _ ∘ _.unFix
 
-  def ana[F[_], B](ψ: Coalgebra[B, F])(b: B)(implicit F: Functor[F]): Fix[F] =
-    Fix ∘ (F.fmap(ana(ψ)) _ ∘ ψ(b))
+  def ana[F[_], B](ψ: Coalgebra[B, F])(implicit F: Functor[F]): B => Fix[F] =
+    (b: B) => Fix ∘ (F.fmap(ana(ψ)) _ ∘ ψ(b))
 
-  def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: Coalgebra[A, F])(a: A): B =
-    cata(φ) _ ∘ ana(ψ) _ ∘ a
+  def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: Coalgebra[A, F]): A => B =
+    cata(φ) ∘ ana(ψ)
 
-  def meta[A, B, F[_] : Functor](ψ: Coalgebra[A, F])(φ: Algebra[F, A])(fix: Fix[F]): Fix[F] =
-    ana(ψ) _ ∘ cata(φ) _ ∘ fix
+  def meta[A, B, F[_] : Functor](ψ: Coalgebra[A, F])(φ: Algebra[F, A]): Fix[F] => Fix[F] =
+    ana(ψ) ∘ cata(φ)
 
 
 }
