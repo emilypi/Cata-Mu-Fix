@@ -29,6 +29,8 @@ package object examples {
   //implicitly hylomorphic fac
   def _factorial: Int => Int = collapseList ∘ genList
 
+
+
   /** TreeF examples - more included in TreeF object */
   def inOrder[N]: Fix[TreeF[N, ?]] => Unit =
     cata[Unit, TreeF[N, ?]] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") }

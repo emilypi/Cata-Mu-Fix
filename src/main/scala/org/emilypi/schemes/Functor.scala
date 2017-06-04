@@ -5,4 +5,6 @@ package org.emilypi.schemes
   */
 trait Functor[F[_]] {
   def fmap[A, B](f: A => B)(fa: F[A]): F[B]
+
+  def liftF[A, B](f: A => B): F[A] => F[B] = fmap(f) _
 }
