@@ -21,3 +21,13 @@ initialCommands in console :=
     "org.emilypi.higher._"
 
 licenses += "GPLv3" -> url("https://www.gnu.org/licenses/gpl-3.0.html")
+
+
+javaOptions in run ++= Seq(
+  "-Xms512M",
+  "-Xmx2G",
+  "-Xss8M",
+  "-XX:+UseG1GC"
+)
+
+fork in run := true

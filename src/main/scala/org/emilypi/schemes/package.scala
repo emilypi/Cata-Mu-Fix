@@ -7,7 +7,6 @@ package object schemes {
 
   type Coalgebra[B, F[_]] = B => F[B]
 
-
   def cata[B, F[_]](φ: Algebra[F, B])(implicit F: Functor[F]): Fix[F] => B =
     φ ∘ F.fmap(cata(φ)) _ ∘ _.unFix
 
