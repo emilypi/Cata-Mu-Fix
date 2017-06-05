@@ -12,7 +12,7 @@ with what primitive recursion is
 
 For example, if you understand this, then you're perfectly fine:
 
-```
+```scala
 def fac(n: Int): Int =
   n match {
     case 0 | 1 => 1
@@ -49,7 +49,7 @@ we'll treat in the pursuit of fold: The list.
 For the purposes of this section, a list is defined in `Scala` (approximately)
 thusly:
 
-```
+```scala
 sealed trait List[+A]
 final case object Nil extends List[Nothing]
 final case class Cons[+A](head: A, tail: List[A]) extends List[A]
@@ -60,8 +60,8 @@ implementations of the List datatype: Nil - the empty list, and Cons (or :: ),
 which represents a sub-list containing an element, and the rest of the list. Every
 list may be constructed according to the following:
 
-```
-Cons(1, Cons(2, Cons(3, Nil)))  <=>  1 :: 2 :: 3 :: Nil
+```scala
+Cons(1, Cons(2, Cons(3, Nil))) // <=>  1 :: 2 :: 3 :: Nil
 ```
 
 
