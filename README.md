@@ -1,6 +1,6 @@
 ## In Pursuit of Foldiness
 
-[![Build Status](https://travis-ci.org/emilypi/Cata-Mu-Fix.svg?branch=master)]
+![Build Status](https://travis-ci.org/emilypi/Cata-Mu-Fix.svg?branch=master)
 
 ### Intro
 
