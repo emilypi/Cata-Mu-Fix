@@ -1,3 +1,11 @@
 language: scala
 scala:
-  - 2.12.2
+ - 2.12.2
+
+jdk:
+- oraclejdk8
+
+after_success:
+- if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then
+     sbt compile publishSigned;
+  fi
