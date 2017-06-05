@@ -4,6 +4,27 @@ package org.emilypi.schemes
   */
 package object instances {
 
+  def map[A, B](as: List[A])(f: A => B): List[B] =
+    as match {
+      case x :: xs => f(x) :: map(xs)(f)
+      case Nil => Nil
+    }
+
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] =
+    as match {
+      case x :: xs => f(x) ::: flatMap(xs)(f)
+      case Nil => Nil
+    }
+
+  def filter[A, B](as: List[A])(p: A => Boolean): List[A] =
+    as match {
+      case x :: xs =>
+        if(p(x)) x :: filter(xs)(p)
+        else filter(xs)(p)
+      case Nil => Nil
+    }
+
+
   implicit def natF = new Functor[NatF] {
     override def fmap[A, B](f: (A) => B)(fa: NatF[A]): NatF[B] =
       fa match {

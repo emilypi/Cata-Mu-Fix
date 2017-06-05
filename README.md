@@ -76,12 +76,25 @@ consisting of both `Cons` elements, and a tail of type `List`, ending at `Nil`.
 Every list contains sublists (the trivial sublist in the case of Nil)
 which look exactly like the datastructure we defined, hence, `List` is a
  *recursive datatype*.Interchangeably, I might mention *inductive datatypes*,
- which are another way of describing these datastructures.
+ which is an equivalent term.
 
 #### The `fold` Operator
 
 
 Lets get started.
+
+Consider the following implementation of the following higher order functions (HOFs), `map`,
+`flatMap`, and `filter`:
+
+```scala
+
+def map[A, B](as: List[A])(f: A => B): List[B] =
+  as match {
+    case x :: xs => f(x) :: map(xs)(f)
+    case Nil => Nil
+  }
+
+
 
 ### Unfolds
 
