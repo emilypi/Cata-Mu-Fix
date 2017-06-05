@@ -45,7 +45,7 @@ scan, reduce? All `fold`s.
 `fold` is not fake news. Let's take a look at the fundamental datastructure that
 we'll treat in the pursuit of fold: The list.
 
-##### Lists
+#### Lists
 For the purposes of this section, a list is defined in `Scala` (approximately)
 thusly:
 
@@ -63,9 +63,15 @@ list may be constructed according to the following:
 ```scala
 Cons(1, Cons(2, Cons(3, Nil))) // <=>  1 :: 2 :: 3 :: Nil
 ```
+Note the recursive structure of this datatype - every head is a singular element
+(in this case, an `Int`), and the tail of every sublist is itself a List -
+consisting of both `Cons` elements, and a tail of type `List`, ending at `Nil`.
+Every list contains sublists (the trivial sublist in the case of Nil)
+which look exactly like the datastructure we defined, hence, `List` is a
+ *recursive datatype*.Interchangeably, I might mention *inductive datatypes*,
+ which are another way of describing these datastructures.
 
-
-##### The `fold` Operator
+#### The `fold` Operator
 
 
 Lets get started.
