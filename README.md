@@ -1,5 +1,7 @@
 ## In Pursuit of Foldiness
 
+https://travis-ci.org/emilypi/Cata-Mu-Fix.svg?branch=master
+
 ### Intro
 
 **Recursion is pretty cool**. This is a well-known fact that is widely accepted
