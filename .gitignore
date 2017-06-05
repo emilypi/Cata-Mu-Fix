@@ -1,9 +1,18 @@
-
+# Java
 *.class
 *.log
+
+# Idea
 .idea/
+.DS_Store
+
+# Sbt
 project/target/
 target/
-/Cata Mu Fix Pt I.iml
-/Cata Mu Fix Pt II.iml
-.DS_Store
+
+# Git
+.gitignore
+
+# Unversioned
+src/main/resources/
+src/test/
