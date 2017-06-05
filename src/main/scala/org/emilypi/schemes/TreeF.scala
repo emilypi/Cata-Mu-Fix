@@ -19,10 +19,10 @@ object TreeF {
   }
 
   def count[A]: Fix[TreeF[A, ?]] => Int =
-    cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + l + r; case TipF => 0 }
+    cata[TreeF[A, ?], Int] { case BranchF(a, l, r) => 1 + l + r; case TipF => 0 }
 
   def depth[A]: Fix[TreeF[A, ?]] => Int =
-    cata[Int, TreeF[A, ?]] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }
+    cata[TreeF[A, ?], Int] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }
 
   def tip[A] = Fix[TreeF[A, ?]](TipF)
 

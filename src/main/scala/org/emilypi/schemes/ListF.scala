@@ -11,18 +11,22 @@ object ListF {
 
     def @:(h: H): Fix[ListF[H, ?]] = cons(h, lf)
 
-    def appendF(bs: Fix[ListF[H, ?]]) =
-      cata[Fix[ListF[H, ?]], ListF[H, ?]] { case Cons(h, t) => cons(h, t); case NilF => bs }
+    def appendF(bs: Fix[ListF[H, ?]]): Fix[ListF[H, ?]] => Fix[ListF[H, ?]] =
+      cata[ListF[H, ?], Fix[ListF[H, ?]]] { case Cons(h, t) => cons(h, t); case NilF => bs }
 
-    def toList = cata[List[H], ListF[H, ?]] { case Cons(h, t) => h :: t; case NilF => Nil }
+    def toList: List[H] = ListF.toList(lf)
 
   }
 
+  //foldRight is implemented in terms of foldLeft for Traversables. It's safe.
   def apply[H, ?](hs: H*): Fix[ListF[H, ?]] =
-    hs.foldLeft(Fix[ListF[H, ?]](NilF))((f: Fix[ListF[H, ?]], h: H) => cons[H](h, f))
+    hs.foldRight(nil[H])(cons[H])
 
-  def nil[H] = Fix[ListF[H, ?]](NilF)
+  def nil[H]: Fix[ListF[H, ?]] = Fix[ListF[H, ?]](NilF)
 
-  def cons[H] = (h: H, t: Fix[ListF[H, ?]]) => Fix[ListF[H, ?]](Cons(h, t))
+  def cons[H]: (H, Fix[ListF[H, ?]]) => Fix[ListF[H, ?]] =
+    (h: H, t: Fix[ListF[H, ?]]) => Fix[ListF[H, ?]](Cons(h, t))
 
+  def toList[H]: Fix[ListF[H, ?]] => List[H] =
+    cata[ListF[H, ?], List[H]] { case Cons(h, t) => h :: t; case NilF => Nil }
 }
