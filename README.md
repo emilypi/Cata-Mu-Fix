@@ -8,9 +8,11 @@ we tend to use this as the entry point of descent for new students into
 the abyss of functional programming idiom. As it turns out, recursion
 isn't just an entry point to functional programming, it is a fundamental
 subject with impressive depth. This tutorial requires nothing but a familiarity
-with what primitive recursion is
+with what primitive recursion is, as well as the desire to learn about
+it in nauseating pedantic depth.
 
-For example, if you understand this, then you're perfectly fine:
+For example, if you understand this, then you're perfectly fine with the bulk of this
+tutorial:
 
 ```scala
 def fac(n: Int): Int =
@@ -19,6 +21,10 @@ def fac(n: Int): Int =
     case n => n * fac(n - 1)
   }
 ```
+
+However, be warned that we do use math later, and most people hate that for
+whatever reason and won't be inclined to learn that crap. I hope you will,
+and it's necessary in order to progress.
 
 **Functional programmers live on the moon**. This is a lesser-known fact that is
 widely accepted to be universal truth, and as functional programmers, we tend
@@ -30,8 +36,9 @@ telling students and people interested in learning more that they would have
 to build their own rocket ship using the language of Category Theory without supervision.
 
 
-**That was widely considered a bad move, and this tutorial attempts to build
-your rocket ship for you in a linear way so that you can reach the moon.**
+**That was widely considered a bad move, and this tutorial attempts to
+at least guide you as you buildyour rocket ship for you in a linear way
+so that you can reach the moon.**
 
 ### Folds
 
