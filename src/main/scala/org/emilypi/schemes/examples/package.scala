@@ -39,13 +39,13 @@ package object examples {
   def cataFibTree: Fix[TreeF[Int, ?]] => Int =
     cata[TreeF[Int, ?], Int] { case TipF => 0; case BranchF(_, 0, 0) => 1; case BranchF(_, l, r) => l + r}
 
-  //explicitly hylomorphic fac
+  //explicitly hylomorphic fib
   def fibonacci: Int => Int =
     hylo[TreeF[Int, ?], Int, Int]
       { case TipF => 0; case BranchF(_, 0, 0) => 1; case BranchF(_, l, r) => l + r }
       { case 0 => TipF; case 1 => BranchF(1, 0, 0); case n => BranchF(n, n - 1, n - 2) }
 
-  //implicitly hylomorphic fac
+  //implicitly hylomorphic fib
   def _fibonacci: Int => Int = cataFibTree ∘ genFibTree
 
 
