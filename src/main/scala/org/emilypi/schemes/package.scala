@@ -23,10 +23,10 @@ package object schemes {
   def meta[A, F[_] : Functor](ψ: Coalgebra[A, F])(φ: Algebra[F, A]): Fix[F] => Fix[F] =
     ana(ψ) ∘ cata(φ)
 
-  def prepro[F[_], A](α: F ~> F)(φ: Algebra[F, A])(implicit F: Functor[F]): Fix[F] => A =
+  def prepro[F[_]: Functor, A](α: F ~> F)(φ: Algebra[F, A]): Fix[F] => A =
     cata[F, A] { φ ∘ α(_) }
 
-  def postpro[A, F[_]](α: F ~> F)(ψ: Coalgebra[A, F])(implicit F: Functor[F]): A => Fix[F] =
+  def postpro[A, F[_]: Functor](α: F ~> F)(ψ: Coalgebra[A, F]): A => Fix[F] =
     ana[A, F] { a => α(ψ(a)) }
 
 
