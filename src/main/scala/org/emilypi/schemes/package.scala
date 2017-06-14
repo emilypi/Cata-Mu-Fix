@@ -24,10 +24,10 @@ package object schemes {
     ana(ψ) ∘ cata(φ)
 
   def prepro[F[_], A](α: F ~> F)(φ: Algebra[F, A])(implicit F: Functor[F]): Fix[F] => A =
-    φ ∘ F.liftF(prepro(α)(φ)) ∘ α[Fix[F]] _ ∘ _.unFix
+    cata[F, A] { φ ∘ α(_) }
 
   def postpro[A, F[_]](α: F ~> F)(ψ: Coalgebra[A, F])(implicit F: Functor[F]): A => Fix[F] =
-    Fix ∘ α[Fix[F]] ∘ F.liftF(postpro(α)(ψ)) ∘ ψ
+    ana[A, F] { a => α(ψ(a)) }
 
 
 }

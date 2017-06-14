@@ -50,7 +50,7 @@ package object examples {
 
 
   //Prepromorphism example - using a natural transformation that
-  val preproExample = new (ListF[Int, ?] ~> ListF[Int, ?]) {
+  val preproExample1 = new (ListF[Int, ?] ~> ListF[Int, ?]) {
     override def apply[A](fa: ListF[Int, A]): ListF[Int, A] =
       fa match {
         case Cons(h, t) => Cons(2 * h, t)
@@ -59,6 +59,8 @@ package object examples {
   }
 
   def doubleListFSum: Fix[ListF[Int, ?]] => Int =
-    prepro[ListF[Int, ?], Int](preproExample) { case Cons(h, t) => h + t; case NilF => 0 }
+    prepro[ListF[Int, ?], Int](preproExample1) { case Cons(h, t) => h + t; case NilF => 0 }
+
+
 
 }

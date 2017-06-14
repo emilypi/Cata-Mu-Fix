@@ -13,6 +13,8 @@ resolvers ++= Seq(
 
 addCompilerPlugin("org.spire-math" %% "kind-projector" % "0.9.3")
 
+scalacOptions += "-Ypartial-unification"
+
 initialCommands in console :=
   "import " +
     "org.emilypi.schemes._, " +
