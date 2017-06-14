@@ -39,8 +39,8 @@ to build their own rocket ship using the language of Category Theory without sup
 
 
 **That was widely considered a bad move, and this tutorial attempts to
-at least guide you as you buildyour rocket ship for you in a linear way
-so that you can reach the moon.**
+at least guide you as you buil dyour rocket ship in a linear way
+so that you can reach the moon more easily.**
 
 ### Folds
 
@@ -79,6 +79,8 @@ Every list contains sublists (the trivial sublist in the case of Nil)
 which look exactly like the datastructure we defined, hence, `List` is a
  *recursive datatype*.Interchangeably, I might mention *inductive datatypes*,
  which is an equivalent term.
+
+ List is *the* fundamental, and simplest recursive data structure.
 
 #### The `fold` Operator
 

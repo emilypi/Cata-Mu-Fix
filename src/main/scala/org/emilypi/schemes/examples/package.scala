@@ -49,4 +49,16 @@ package object examples {
   def _fibonacci: Int => Int = cataFibTree ∘ genFibTree
 
 
+  //Prepromorphism example - using a natural transformation that
+  val preproExample = new (ListF[Int, ?] ~> ListF[Int, ?]) {
+    override def apply[A](fa: ListF[Int, A]): ListF[Int, A] =
+      fa match {
+        case Cons(h, t) => Cons(2 * h, t)
+        case NilF => NilF
+      }
+  }
+
+  def doubleListFSum: Fix[ListF[Int, ?]] => Int =
+    prepro[ListF[Int, ?], Int](preproExample){ case Cons(h, t) => h + t; case NilF => 0 }
+
 }

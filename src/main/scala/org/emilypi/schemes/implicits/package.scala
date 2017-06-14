@@ -7,9 +7,9 @@ package object implicits {
 
   implicit class fOps[A, B, E](f: A => B) {
     //compose functions
-    def ∘(g: E => A): E => B = (a: E) => f(g(a))
+    def ∘(g: E => A): E => B = (e: E) => f(g(e))
 
     def ∘(a: A): B = f(a)
-  }
 
+  }
 }
