@@ -59,6 +59,6 @@ package object examples {
   }
 
   def doubleListFSum: Fix[ListF[Int, ?]] => Int =
-    prepro[ListF[Int, ?], Int](preproExample){ case Cons(h, t) => h + t; case NilF => 0 }
+    prepro[ListF[Int, ?], Int](preproExample) { case Cons(h, t) => h + t; case NilF => 0 }
 
 }

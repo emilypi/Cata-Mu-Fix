@@ -12,4 +12,10 @@ package object implicits {
     def ∘(a: A): B = f(a)
 
   }
+
+  implicit class ntOps[F[_]](nt: F ~> F) {
+
+    def ∘(unfix: Fix[F] => F[Fix[F]]): Fix[F] => F[Fix[F]] =
+      (fix: Fix[F]) => nt(fix.unFix)
+  }
 }

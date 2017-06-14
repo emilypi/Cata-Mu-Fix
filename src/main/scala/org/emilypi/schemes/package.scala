@@ -15,7 +15,7 @@ package object schemes {
     φ ∘ F.liftF(cata(φ)) ∘ _.unFix
 
   def ana[A, F[_]](ψ: Coalgebra[A, F])(implicit F: Functor[F]): A => Fix[F] =
-    Fix ∘ F.liftF(ana(ψ)) ∘ ψ ∘ _
+    Fix ∘ F.liftF(ana(ψ)) ∘ ψ
 
   def hylo[F[_] : Functor, A, B](φ: Algebra[F, B])(ψ: Coalgebra[A, F]): A => B =
     cata(φ) ∘ ana(ψ)
@@ -24,6 +24,10 @@ package object schemes {
     ana(ψ) ∘ cata(φ)
 
   def prepro[F[_], A](α: F ~> F)(φ: Algebra[F, A])(implicit F: Functor[F]): Fix[F] => A =
-    (fix: Fix[F]) => φ ∘ F.liftF(prepro(α)(φ)) ∘ α[Fix[F]](fix.unFix)
+    φ ∘ F.liftF(prepro(α)(φ)) ∘ α[Fix[F]] _ ∘ _.unFix
+
+  def postpro[A, F[_]](α: F ~> F)(ψ: Coalgebra[A, F])(implicit F: Functor[F]): A => Fix[F] =
+    Fix ∘ α[Fix[F]] ∘ F.liftF(postpro(α)(ψ)) ∘ ψ
+
 
 }
