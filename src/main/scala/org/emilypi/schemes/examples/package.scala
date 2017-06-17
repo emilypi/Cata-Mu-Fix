@@ -9,22 +9,22 @@ package object examples {
 
   /** ListF examples */
   def sumF: Fix[ListF[Int, ?]] => Int =
-    cata[ListF[Int, ?], Int] { case Cons(h, t) => h + t; case NilF => 0 }
+    cata[ListF[Int, ?], Int] { case h @: t => h + t; case NilF => 0 }
 
   def countF: Fix[ListF[Int, ?]] => Int =
-    cata[ListF[Int, ?], Int] { case Cons(h, t) => 1 + t; case NilF => 0 }
+    cata[ListF[Int, ?], Int] { case h @: t => 1 + t; case NilF => 0 }
 
   def genList: Int => Fix[ListF[Int, ?]] =
-    ana[Int, ListF[Int, ?]] { case 0 => NilF; case n => Cons(n, n - 1) }
+    ana[Int, ListF[Int, ?]] { case 0 => NilF; case n => @:(n, (n - 1)) }
 
   def collapseList: Fix[ListF[Int, ?]] => Int =
-    cata[ListF[Int, ?], Int] { case NilF => 1; case Cons(h, t) => h * t }
+    cata[ListF[Int, ?], Int] { case NilF => 1; case h @: t => h * t }
 
   //explicitly hylomorphic fac
   def factorial: Int => Int =
     hylo[ListF[Int, ?], Int, Int]
-      { case NilF => 1; case Cons(h, t) => h * t }
-      { case 0 => NilF; case n => Cons(n, n - 1) }
+      { case NilF => 1; case h @: t => h * t }
+      { case 0 => NilF; case n => @:(n, n - 1) }
 
   //implicitly hylomorphic fac
   def _factorial: Int => Int = collapseList ∘ genList
@@ -50,17 +50,17 @@ package object examples {
 
 
   //Prepromorphism example - using a natural transformation that
-  val preproExample1 = new (ListF[Int, ?] ~> ListF[Int, ?]) {
-    override def apply[A](fa: ListF[Int, A]): ListF[Int, A] =
+  val doubleListF = new (ListF[Int, ?] ~> ListF[(Int, Int), ?]) {
+    override def apply[A](fa: ListF[Int, A]): ListF[(Int, Int), A] =
       fa match {
-        case Cons(h, t) => Cons(2 * h, t)
+        case h @: t => @:((h, 2 * h), t)
         case NilF => NilF
       }
   }
 
-  def doubleListFSum: Fix[ListF[Int, ?]] => Int =
-    prepro[ListF[Int, ?], Int](preproExample1) { case Cons(h, t) => h + t; case NilF => 0 }
-
+  def doubleListFSum: Fix[ListF[Int, ?]] => (Int, Int) =
+    prepro[ListF[Int, ?], ListF[(Int, Int), ?], (Int, Int)](doubleListF)
+      { case h @: t => (h._1 + t._1, h._2 + t._2); case NilF => (0, 0) }
 
 
 }

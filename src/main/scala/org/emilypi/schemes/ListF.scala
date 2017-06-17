@@ -1,18 +1,20 @@
 package org.emilypi.schemes
 
+import scala.annotation.tailrec
+
 sealed abstract class ListF[+H, +T]
-final case class Cons[H, +T](head: H, tail: T) extends ListF[H, T]
+final case class @:[H, +T](head: H, tail: T) extends ListF[H, T]
 case object NilF extends ListF[Nothing, Nothing]
 
 object ListF {
   import instances._
 
-  implicit class lfOps[H](lf: Fix[ListF[H, ?]]) {
+  implicit class lfFixOps[H](lf: Fix[ListF[H, ?]]) {
 
     def @:(h: H): Fix[ListF[H, ?]] = cons(h, lf)
 
-    def appendF(bs: Fix[ListF[H, ?]]): Fix[ListF[H, ?]] => Fix[ListF[H, ?]] =
-      cata[ListF[H, ?], Fix[ListF[H, ?]]] { case Cons(h, t) => cons(h, t); case NilF => bs }
+    def @::(bs: Fix[ListF[H, ?]]): Fix[ListF[H, ?]] => Fix[ListF[H, ?]] =
+      cata[ListF[H, ?], Fix[ListF[H, ?]]] { case h @: t => cons(h, t); case NilF => bs }
 
     def toList: List[H] = ListF.toList(lf)
 
@@ -25,8 +27,8 @@ object ListF {
   def nil[H]: Fix[ListF[H, ?]] = Fix[ListF[H, ?]](NilF)
 
   def cons[H]: (H, Fix[ListF[H, ?]]) => Fix[ListF[H, ?]] =
-    (h: H, t: Fix[ListF[H, ?]]) => Fix[ListF[H, ?]](Cons(h, t))
+    (h: H, t: Fix[ListF[H, ?]]) => Fix[ListF[H, ?]](@:(h, t))
 
   def toList[H]: Fix[ListF[H, ?]] => List[H] =
-    cata[ListF[H, ?], List[H]] { case Cons(h, t) => h :: t; case NilF => Nil }
+    cata[ListF[H, ?], List[H]] { case h @: t => h :: t; case NilF => Nil }
 }

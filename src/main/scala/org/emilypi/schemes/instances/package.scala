@@ -54,7 +54,7 @@ package object instances {
     def fmap[A, B](f: A => B)(fa: ListF[H, A]): ListF[H, B] =
       fa match {
         case NilF => NilF
-        case Cons(x, xs) => Cons(x, f(xs))
+        case x @: xs => @:(x, f(xs))
       }
   }
 

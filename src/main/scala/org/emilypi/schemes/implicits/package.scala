@@ -18,4 +18,5 @@ package object implicits {
     def ∘(unfix: Fix[F] => F[Fix[F]]): Fix[F] => F[Fix[F]] =
       (fix: Fix[F]) => nt(fix.unFix)
   }
+
 }

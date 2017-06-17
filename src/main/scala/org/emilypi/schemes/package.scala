@@ -3,6 +3,8 @@ package org.emilypi
 package object schemes {
   import implicits._
 
+  type \/[A, B] = Either[A, B]
+
   type Algebra[F[_], A] = F[A] => A
 
   type Coalgebra[B, F[_]] = B => F[B]
@@ -23,7 +25,7 @@ package object schemes {
   def meta[A, F[_] : Functor](ψ: Coalgebra[A, F])(φ: Algebra[F, A]): Fix[F] => Fix[F] =
     ana(ψ) ∘ cata(φ)
 
-  def prepro[F[_]: Functor, A](α: F ~> F)(φ: Algebra[F, A]): Fix[F] => A =
+  def prepro[F[_]: Functor, G[_]: Functor, A](α: F ~> G)(φ: Algebra[G, A]): Fix[F] => A =
     cata[F, A] { φ ∘ α(_) }
 
   def postpro[A, F[_]: Functor](α: F ~> F)(ψ: Coalgebra[A, F]): A => Fix[F] =
