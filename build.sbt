@@ -20,7 +20,8 @@ initialCommands in console :=
     "org.emilypi.schemes._, " +
     "org.emilypi.schemes.instances._, " +
     "org.emilypi.schemes.examples._, " +
-    "org.emilypi.higher._"
+    "org.emilypi.moreschemes._," +
+    "org.emilypi.algebra._"
 
 licenses += "GPLv3" -> url("https://www.gnu.org/licenses/gpl-3.0.html")
 

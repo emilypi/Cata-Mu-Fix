@@ -1,4 +1,4 @@
-package org.emilypi.higher
+package org.emilypi.moreschemes
 
 import org.emilypi.schemes.Functor
 

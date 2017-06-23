@@ -1,6 +1,6 @@
 package org.emilypi.schemes
 
-import org.emilypi.higher.Composite
+import org.emilypi.moreschemes.Composite
 
 /**
   * Created by emilypi on 6/3/17.
