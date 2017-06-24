@@ -13,6 +13,4 @@ target/
 # Git
 .gitignore
 
-# Unversioned
-src/main/resources/
-src/test/
+
