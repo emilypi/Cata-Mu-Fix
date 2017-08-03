@@ -5,4 +5,4 @@ import org.emilypi.schemes.Functor
 /**
   * Created by emilypi on 6/3/17.
   */
-trait Corecursive[T[_]]
+trait Corecursive[T[_[_]]]

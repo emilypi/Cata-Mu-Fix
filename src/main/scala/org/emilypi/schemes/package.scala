@@ -1,5 +1,7 @@
 package org.emilypi
 
+import org.emilypi.moreschemes.Dist
+
 package object schemes {
   import implicits._
 
@@ -9,9 +11,11 @@ package object schemes {
 
   type Coalgebra[B, F[_]] = B => F[B]
 
-  type GAlgebra[W[_], F[_], A] = A => F[W[A]]
+  type GAlgebra[F[_], W[_], A] = F[W[A]] => A
 
-  type GCoalgebra[W[_], F[_], A] = F[W[A]] => A
+  type GCoalgebra[W[_], F[_], A] = A => F[W[A]]
+
+  def id[A]: A => A = a => a
 
   def cata[F[_], B](φ: Algebra[F, B])(implicit F: Functor[F]): Fix[F] => B =
     φ ∘ F.liftF(cata(φ)) ∘ _.unFix
@@ -30,6 +34,15 @@ package object schemes {
 
   def postpro[A, F[_]: Functor](α: F ~> F)(ψ: Coalgebra[A, F]): A => Fix[F] =
     ana[A, F] { a => α(ψ(a)) }
+
+  def gcata[F[_], W[_], A](k: Dist[F, W])(φ: GAlgebra[F, W, A])
+                          (implicit F: Functor[F],  W: Comonad[W]): Fix[F] => A = ???
+
+
+
+
+
+
 
 
 }

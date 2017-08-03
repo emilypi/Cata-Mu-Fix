@@ -8,7 +8,6 @@ import org.emilypi.moreschemes.instances.BinaryOp
   */
 package object moreschemes {
   import schemes._
-  import implicits._, instances._
 
   type Id[+A] = A
 
