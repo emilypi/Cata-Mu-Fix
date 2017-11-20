@@ -1,3 +1,5 @@
+# Note: On hold until I've got some free time
+
 ## In Pursuit of Foldiness
 
 ![Build Status](https://travis-ci.org/emilypi/Cata-Mu-Fix.svg?branch=master)
