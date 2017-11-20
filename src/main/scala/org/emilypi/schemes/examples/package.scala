@@ -1,5 +1,7 @@
 package org.emilypi.schemes
 
+import org.emilypi.schemes.NatF.{succ, zero}
+
 /**
   * Created by emilypi on 6/2/17.
   */
@@ -8,6 +10,7 @@ package object examples {
   import instances._
 
   /** ListF examples */
+
   def sumF: Fix[ListF[Int, ?]] => Int =
     cata[ListF[Int, ?], Int] { case h @: t => h + t; case NilF => 0 }
 
@@ -30,6 +33,13 @@ package object examples {
   def _factorial: Int => Int = collapseList ∘ genList
 
   /** TreeF examples - more included in TreeF object */
+
+  def count[A]: Fix[TreeF[A, ?]] => Int =
+    cata[TreeF[A, ?], Int] { case BranchF(a, l, r) => 1 + l + r; case TipF => 0 }
+
+  def depth[A]: Fix[TreeF[A, ?]] => Int =
+    cata[TreeF[A, ?], Int] { case BranchF(a, l, r) => 1 + Math.max(l, r); case TipF => 0 }
+
   def inOrder[N]: Fix[TreeF[N, ?]] => Unit =
     cata[TreeF[N, ?], Unit] { case BranchF(a, l, r) => println(a.toString); case TipF => println("Tip") }
 

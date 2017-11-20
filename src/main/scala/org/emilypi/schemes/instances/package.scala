@@ -28,8 +28,8 @@ package object instances {
   implicit def natF = new Functor[NatF] {
     override def fmap[A, B](f: (A) => B)(fa: NatF[A]): NatF[B] =
       fa match {
-        case S(a) => S(f(a))
-        case Z => Z
+        case SS(a) => SS(f(a))
+        case ZZ => ZZ
       }
   }
 

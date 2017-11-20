@@ -33,8 +33,7 @@ lazy val commonSettings = List(
       "org.emilypi.schemes._, " +
       "org.emilypi.schemes.instances._, " +
       "org.emilypi.schemes.examples._, " +
-      "org.emilypi.moreschemes._," +
-      "org.emilypi.algebra._"
+      "org.emilypi.moreschemes._,"
 )
 
 lazy val root = (project in file("."))

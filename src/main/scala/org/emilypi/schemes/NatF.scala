@@ -2,21 +2,24 @@ package org.emilypi.schemes
 
 
 sealed abstract class NatF[+A]
-final case class S[+A](n: A) extends NatF[A]
-case object Z extends NatF[Nothing]
+final case class SS[+A](n: A) extends NatF[A]
+case object ZZ extends NatF[Nothing]
 
 object NatF {
   import instances._
 
   implicit class natOps(n: Fix[NatF[?]]) {
 
-    def toInt: Int = NatF.toInt(n)
+    def toInt: Fix[NatF[?]] => Int =
+      cata[NatF[?], Int] { case SS(n) => 1 + n; case ZZ => 0 }
 
     //note that + is structurally equivalent to append
-    def + = cata[NatF[?], Fix[NatF[?]]] { case Z => n; case S(t) => succ(t) }
+    def + : Fix[NatF[?]] => Fix[NatF[?]] =
+      cata[NatF[?], Fix[NatF[?]]] { case ZZ => n; case SS(t) => succ(t) }
 
     //Hey look, we *can* multiply by 0... but is it really 0?
-    def * = cata[NatF[?], Fix[NatF[?]]] { case Z => zero; case S(t) => n + t }
+    def * : Fix[NatF[?]] => Fix[NatF[?]] =
+      cata[NatF[?], Fix[NatF[?]]] { case ZZ => zero; case SS(t) => n + t }
   }
 
   def apply(n: Int): Fix[NatF[?]] =
@@ -25,11 +28,8 @@ object NatF {
     case _ => succ(apply(n - 1))
   }
 
-  def toInt: Fix[NatF[?]] => Int =
-    cata[NatF[?], Int] { case S(n) => 1 + n; case Z => 0 }
+  def zero = Fix[NatF[?]](ZZ)
 
-  def zero = Fix[NatF[?]](Z)
-
-  def succ(n: Fix[NatF[?]]) = Fix[NatF[?]](S(n))
+  def succ(n: Fix[NatF[?]]) = Fix[NatF[?]](SS(n))
 
 }

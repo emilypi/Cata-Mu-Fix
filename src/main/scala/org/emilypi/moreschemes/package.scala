@@ -5,7 +5,10 @@ package org.emilypi
   */
 package object moreschemes {
 
-  type Id[+A] = A
+  type Id[A] = A
 
+  type :+:[F[_], G[_]] = Coproduct[F, G]
+
+  type :*:[F[_], G[_]] = Product[F, G]
 
 }

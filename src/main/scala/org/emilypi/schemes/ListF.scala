@@ -1,6 +1,5 @@
 package org.emilypi.schemes
 
-import scala.annotation.tailrec
 
 sealed abstract class ListF[+H, +T]
 final case class @:[H, +T](head: H, tail: T) extends ListF[H, T]
