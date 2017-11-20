@@ -11,8 +11,10 @@ package object schemes {
 
   type Coalgebra[B, F[_]] = B => F[B]
 
+  // TODO
   type GAlgebra[F[_], W[_], A] = F[W[A]] => A
 
+  // TODO
   type GCoalgebra[W[_], F[_], A] = A => F[W[A]]
 
   def id[A]: A => A = a => a
@@ -34,15 +36,5 @@ package object schemes {
 
   def postpro[A, F[_]: Functor](α: F ~> F)(ψ: Coalgebra[A, F]): A => Fix[F] =
     ana[A, F] { a => α(ψ(a)) }
-
-  def gcata[F[_], W[_], A](k: Dist[F, W])(φ: GAlgebra[F, W, A])
-                          (implicit F: Functor[F],  W: Comonad[W]): Fix[F] => A = ???
-
-
-
-
-
-
-
 
 }
