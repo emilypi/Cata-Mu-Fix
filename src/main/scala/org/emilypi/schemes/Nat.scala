@@ -9,16 +9,15 @@ object Nat {
   }
 
   def apply(i: Int): Nat =
-    if(i == 0) Z
-    else S(apply(i-1))
+    if (i == 0) Z
+    else S(apply(i - 1))
 
   def foldn[A](f: A => A)(z: A)(n: Nat): A =
     n match {
       case S(n) => f(foldn(f)(z)(n))
-      case Z => z
+      case Z    => z
     }
 }
 
 final case class S(n: Nat) extends Nat
 case object Z extends Nat
-

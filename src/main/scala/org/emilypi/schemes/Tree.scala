@@ -12,6 +12,6 @@ object Tree {
   def fold[A, B](f: A => B => B => B)(z: B)(t: Tree[A]): B =
     t match {
       case Branch(a, l, r) => f(a)(fold(f)(z)(l))(fold(f)(z)(r))
-      case Tip => z
+      case Tip             => z
     }
 }

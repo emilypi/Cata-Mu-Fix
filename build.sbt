@@ -27,7 +27,7 @@ lazy val commonSettings = List(
   ),
   fork in run := true,
   resolvers ++= List(Resolver.sonatypeRepo("snapshots"),
-    Resolver.sonatypeRepo("releases")),
+                     Resolver.sonatypeRepo("releases")),
   initialCommands in console :=
     "import " +
       "org.emilypi.schemes._, " +

@@ -7,4 +7,3 @@ object Fix {
   def ∘[F[_], B](unfix: B => F[Fix[F]]): B => Fix[F] = (b: B) => Fix(unfix(b))
 
 }
-

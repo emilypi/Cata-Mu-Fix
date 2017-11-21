@@ -1,6 +1,5 @@
 package org.emilypi.schemes
 
-
 sealed abstract class ListF[+H, +T]
 final case class @:[H, +T](head: H, tail: T) extends ListF[H, T]
 case object NilF extends ListF[Nothing, Nothing]
@@ -13,7 +12,9 @@ object ListF {
     def @:(h: H): Fix[ListF[H, ?]] = cons(h, lf)
 
     def @::(bs: Fix[ListF[H, ?]]): Fix[ListF[H, ?]] => Fix[ListF[H, ?]] =
-      cata[ListF[H, ?], Fix[ListF[H, ?]]] { case h @: t => cons(h, t); case NilF => bs }
+      cata[ListF[H, ?], Fix[ListF[H, ?]]] {
+        case h @: t => cons(h, t); case NilF => bs
+      }
 
     def toList: List[H] = ListF.toList(lf)
 

@@ -11,6 +11,4 @@ trait Functor[F[_]] {
 
   def liftF[A, B](f: A => B): F[A] => F[B] = fmap(f) _
 
-
 }
-

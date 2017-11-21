@@ -1,6 +1,5 @@
 package org.emilypi.schemes
 
-
 sealed abstract class NatF[+A]
 final case class SS[+A](n: A) extends NatF[A]
 case object ZZ extends NatF[Nothing]
@@ -23,10 +22,10 @@ object NatF {
   }
 
   def apply(n: Int): Fix[NatF[?]] =
-  n match {
-    case 0 => zero
-    case _ => succ(apply(n - 1))
-  }
+    n match {
+      case 0 => zero
+      case _ => succ(apply(n - 1))
+    }
 
   def zero = Fix[NatF[?]](ZZ)
 

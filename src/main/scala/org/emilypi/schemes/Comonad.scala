@@ -5,9 +5,18 @@ trait Comonad[W[_]] extends Functor[W] {
 
   def counit[A]: W[A] => A //admits an F-algebra
 
-  def =<<[A, B](k: W[A] => B)(wa: W[A]): W[B]
+  def cobind[A, B](k: W[A] => B): W[B]
 
-  def cojoin[A](wa: W[A]): W[W[A]] = ???
+  def cojoin[A]: W[W[A]] = cobind[A, W[A]](id)
 
-  def liftW[A, B](f: A => B): W[A] => W[B] = =<< (f ∘ counit[A]) _
+  def liftW[A, B](f: A => B): W[B] = cobind(f ∘ counit[A])
+}
+
+object Comonad {
+
+  implicit class comonadOps[W[_]](wa: Comonad[W]) {
+
+    def =<<[A, B](k: W[A] => B): W[B] =
+      wa.cobind(k)
+  }
 }
