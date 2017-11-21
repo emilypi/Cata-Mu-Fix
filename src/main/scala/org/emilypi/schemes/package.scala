@@ -11,12 +11,6 @@ package object schemes {
 
   type Coalgebra[B, F[_]] = B => F[B]
 
-  // TODO
-  type GAlgebra[F[_], W[_], A] = F[W[A]] => A
-
-  // TODO
-  type GCoalgebra[W[_], F[_], A] = A => F[W[A]]
-
   def id[A]: A => A = a => a
 
   def cata[F[_], B](φ: Algebra[F, B])(implicit F: Functor[F]): Fix[F] => B =
